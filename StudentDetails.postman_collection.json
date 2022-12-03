@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "1e37d023-0789-4acf-8174-386b544ec4e4",
+		"name": "StudentDetails",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19776911"
+	},
+	"item": [
+		{
+			"name": "Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"\r",
+							"pm.environment.set(\"id\", jsonData.id)\r",
+							"\r",
+							"var code = responseCode.code\r",
+							"\r",
+							"if(jsonData.first_name == pm.environment.get(\"FirstName\")){\r",
+							"\r",
+							"    pm.test(\"FirstName\", function () {\r",
+							"        pm.expect(jsonData.first_name).to.eql(pm.environment.get(\"FirstName\"));\r",
+							"    });\r",
+							"}\r",
+							"if(jsonData.middle_name == \"anik\"){\r",
+							"    pm.test(\"middlename\", function(){\r",
+							"        pm.expect(jsonData.middle_name).to.eql(\"anik\");\r",
+							"    })\r",
+							"}\r",
+							"if(jsonData.last_name == pm.environment.get(\"LastName\")){\r",
+							"    pm.test(\"lastname\", function(){\r",
+							"        pm.expect(jsonData.last_name).to.eql(pm.environment.get(\"LastName\"));\r",
+							"    })\r",
+							"}\r",
+							"else{\r",
+							"    console.log(\"not Mached\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var username = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+							"\r",
+							"pm.environment.set(\"FirstName\", username)\r",
+							"\r",
+							"var username = pm.variables.replaceIn('{{$randomLastName}}');\r",
+							"\r",
+							"pm.environment.set(\"LastName\", username)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"{{FirstName}}\",\r\n  \"middle_name\": \"anik\",\r\n  \"last_name\": \"{{LastName}}\",\r\n  \"date_of_birth\": \"sample string 5\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/api/studentsDetails",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"if(jsonData.data.first_name == pm.environment.get(\"FirstName\")){\r",
+							"\r",
+							"    pm.test(\"FirstName\", function () {\r",
+							"        pm.expect(jsonData.data.first_name).to.eql(pm.environment.get(\"FirstName\"));\r",
+							"    });\r",
+							"}\r",
+							"if(jsonData.data.middle_name == \"anik\"){\r",
+							"\r",
+							"    pm.test(\"FirstName\", function () {\r",
+							"        pm.expect(jsonData.data.middle_name).to.eql(\"anik\");\r",
+							"    });\r",
+							"}\r",
+							"if(jsonData.data.last_name == pm.environment.get(\"LastName\")){\r",
+							"\r",
+							"    pm.test(\"FirstName\", function () {\r",
+							"        pm.expect(jsonData.data.last_name).to.eql(pm.environment.get(\"LastName\"));\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Url}}//api/studentsDetails/{{id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"",
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":{{id}},\r\n  \"first_name\": \"{{FirstName}}\",\r\n  \"middle_name\": \"123 \",\r\n  \"last_name\": \"123 \",\r\n  \"date_of_birth\": \"sample \"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}//api/studentsDetails/{{id}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"",
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
